@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f32">
+  <meta name="description" content="A calm, smart dashboard for keeping your plants thriving.">
+  <title>Verdant — Smart Plant Care</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Verdant home">
+        <span class="brand-mark">✳</span><span>verdant<span class="brand-dot">.</span></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a class="nav-link active" href="#overview"><span>◫</span> Overview</a>
+        <a class="nav-link" href="#my-plants"><span>♧</span> My plants <span class="nav-count" id="navPlantCount">0</span></a>
+        <a class="nav-link" href="#care-guide"><span>✧</span> Care guide</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-tip">
+          <div class="tip-spark">✦</div>
+          <p class="side-tip-title">A little care goes a long way.</p>
+          <p class="side-tip-copy">Build a routine, notice the changes, and let your space grow.</p>
+          <a href="#care-guide">Explore care tips <span>↗</span></a>
+        </div>
+        <div class="profile">
+          <div class="avatar">G</div>
+          <div><strong>Garden keeper</strong><small>Your green space</small></div>
+          <span class="profile-more">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Toggle menu">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong>Overview</strong></div>
+        <div class="topbar-actions">
+          <span class="connection-pill" id="connectionStatus"><span class="status-dot"></span> Checking connection</span>
+          <div class="date-chip" id="todayLabel">Today</div>
+        </div>
+      </header>
+
+      <section class="welcome-row" id="overview">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR PERSONAL PLANT STUDIO</div>
+          <h1>Grow a little <em>happier.</em></h1>
+          <p class="welcome-copy">Your plants, their needs, and a calmer way to care for them — all in one place.</p>
+        </div>
+        <button class="primary-button" id="openAddModal"><span>＋</span> Add a plant</button>
+      </section>
+
+      <section class="hero-card">
+        <div class="hero-text">
+          <div class="hero-kicker"><span class="sun-icon">☼</span> YOUR DAILY GREEN CHECK-IN</div>
+          <h2>Small rituals.<br><em>Thriving leaves.</em></h2>
+          <p id="dailyMessage">A quick check-in today can make all the difference tomorrow.</p>
+          <a class="hero-link" href="#my-plants">Check your plants <span>→</span></a>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-sun"></div><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+          <div class="plant-illustration">
+            <div class="stem"></div>
+            <div class="leaf leaf-a"></div><div class="leaf leaf-b"></div><div class="leaf leaf-c"></div>
+            <div class="leaf leaf-d"></div><div class="leaf leaf-e"></div>
+            <div class="pot"><div class="pot-rim"></div></div>
+          </div>
+          <div class="art-label label-top"><span>✦</span> Room to bloom</div>
+          <div class="art-label label-bottom"><span>♡</span> Care in progress</div>
+        </div>
+        <div class="hero-grain"></div>
+      </section>
+
+      <section class="stats-grid" aria-label="Plant care summary">
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-icon icon-green">♧</span><span class="stat-caption">COLLECTION</span></div>
+          <div class="stat-value" id="totalPlants">0</div><div class="stat-bottom"><strong>Your leafy family</strong><span class="stat-note">plants tracked</span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-icon icon-peach">◉</span><span class="stat-caption">NEEDS ATTENTION</span></div>
+          <div class="stat-value" id="needsWater">0</div><div class="stat-bottom"><strong>Time for a drink?</strong><span class="stat-note">due or overdue</span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-icon icon-lilac">✧</span><span class="stat-caption">CARE RHYTHM</span></div>
+          <div class="stat-value"><span id="careScore">—</span><small>%</small></div><div class="stat-bottom"><strong>Consistency score</strong><span class="stat-note">based on watering dates</span></div>
+        </article>
+      </section>
+
+      <section class="plants-section" id="my-plants">
+        <div class="section-heading">
+          <div><div class="eyebrow">YOUR COLLECTION</div><h2>Meet your <em>greens.</em></h2></div>
+          <button class="text-button" id="showAllPlants">View collection <span>→</span></button>
+        </div>
+        <div class="collection-toolbar">
+          <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search your plants..." aria-label="Search plants"></label>
+          <div class="filter-group" role="group" aria-label="Filter plants">
+            <button class="filter-button active" data-filter="all">All plants</button>
+            <button class="filter-button" data-filter="due">Needs water <span class="filter-dot"></span></button>
+          </div>
+        </div>
+        <div class="plant-grid" id="plantGrid" aria-live="polite">
+          <div class="loading-state">Growing your collection<span>...</span></div>
+        </div>
+        <div class="empty-state hidden" id="emptyState">
+          <div class="empty-emoji">🌱</div><h3>No plants found just yet</h3><p>Add your first plant or try a different search.</p>
+          <button class="primary-button" id="emptyAddButton">＋ Add a plant</button>
+        </div>
+      </section>
+
+      <section class="bottom-grid" id="care-guide">
+        <article class="care-panel">
+          <div class="section-heading compact"><div><div class="eyebrow">PLANT WISDOM</div><h2>A note from <em>nature.</em></h2></div><span class="sparkle">✳</span></div>
+          <div class="care-tip-content"><div class="care-tip-icon">☼</div><div><h3 id="tipTitle">Follow the light</h3><p id="tipBody">Most houseplants appreciate a consistent spot. Notice how the light changes throughout the day before moving your plant.</p></div></div>
+          <button class="subtle-button" id="nextTip">Another little tip <span>↗</span></button>
+        </article>
+        <article class="quick-care-panel">
+          <div class="eyebrow">QUICK CARE</div><h2>Make today<br>count.</h2>
+          <p>One mindful minute with your plants can help you spot what they need.</p>
+          <div class="quick-checks"><div><span class="check-icon">✓</span> Check soil before watering</div><div><span class="check-icon">✓</span> Wipe dusty leaves gently</div><div><span class="check-icon">✓</span> Rotate for even light</div></div>
+          <div class="quick-leaf" aria-hidden="true">❧</div>
+        </article>
+      </section>
+      <footer class="footer"><span>✳ verdant</span><span>Made for the love of growing things.</span><span id="footerMode">Local demo ready</span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="plantModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header"><div><div class="eyebrow">ADD TO YOUR COLLECTION</div><h2 id="modalTitle">Meet your new <em>plant.</em></h2></div><button class="close-button" id="closeModal" aria-label="Close dialog">×</button></div>
+      <form id="plantForm">
+        <div class="form-grid">
+          <label class="form-field full-width">Plant name <span>*</span><input name="name" required maxlength="80" placeholder="e.g. Sunny the Monstera"></label>
+          <label class="form-field full-width">Plant species <span>*</span><input name="species" required maxlength="100" placeholder="e.g. Monstera deliciosa"></label>
+          <label class="form-field">Where does it live? <span>*</span><input name="location" required maxlength="100" placeholder="e.g. Bedroom shelf"></label>
+          <label class="form-field">Light preference<select name="light"><option value="indirect">Bright indirect</option><option value="low">Low light</option><option value="bright">Bright light</option><option value="direct">Direct sun</option></select></label>
+          <label class="form-field">Water every (days)<input type="number" name="water_interval_days" min="1" max="60" value="7" required></label>
+          <label class="form-field">Last watered<input type="date" name="last_watered"></label>
+          <label class="form-field full-width">Notes (optional)<textarea name="notes" rows="2" maxlength="500" placeholder="Any little details to remember..."></textarea></label>
+        </div>
+        <div class="form-error hidden" id="formError" role="alert"></div>
+        <div class="modal-actions"><button type="button" class="subtle-button" id="cancelModal">Maybe later</button><button type="submit" class="primary-button" id="savePlantButton">Save plant <span>→</span></button></div>
+      </form>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
